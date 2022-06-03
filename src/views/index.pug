@@ -1,0 +1,30 @@
+doctype html
+<html>
+    head
+        meta(charset='utf-8')/
+        title Index
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    body 
+        <h2> Jugadoras </h2>
+            div
+                <a href='/jugadora/4'> Marta Latorre (4)</a><br>
+                <a href='/jugadora/5'> Julia Forcada (5)</a><br>
+                <a href='/jugadora/7'> Carla Garcia (7)</a><br>
+                <a href='/jugadora/8'> Ariadna Chamorro (8)</a><br>
+                <a href='/jugadora/9'> Marina Garcia (9)</a><br>
+                <a href='/jugadora/10'> Nora Garcia (10)</a><br>
+                <a href='/jugadora/11'> Julia Campillo (11)</a><br>
+                <a href='/jugadora/14'> Olivia Fernandez (14)</a><br>
+                <a href='/jugadora/15'> Lucia Roman (15)</a><br>
+                <a href='/jugadora/18'> Julia Saez (18)</a><br>
+                <a href='/jugadora/24'> Anna Gallego (24)</a><br>
+        <h2> Todos los datos </h2>
+            div
+                ul
+                    each value, index in rowData
+                        if value.Nombre
+                            li #{value.Fecha + ':' + value.Nombre + '(' + value.Numero + ')' + '->' + value.Nivel_de_cansancio}
+                hr
+        p 
+            a(href='/form') Crear Nuevo
+</html>

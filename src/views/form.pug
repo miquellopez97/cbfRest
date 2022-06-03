@@ -1,0 +1,33 @@
+doctype html
+html
+    head
+        meta(charset='utf-8')/
+        title Index
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    body
+        a(href='/') Volver al Inicio
+        div 
+            <form (method="post" action="/form")>
+                div(class="form-group")
+                    label(for="jugadora" class="form-label") Jugadora(Nombre):
+                    p
+                        input(type="text" class="form-control" name="Jugadora_(Nombre_Apellido)" id="jugadoraNombre" placeholder="Nombre Jugadora")
+                div(class="mb-3")
+                    label(for="jugadora" class="form-label") Jugadora(Numero):
+                    p
+                        input(type="number" class="form-control" name="Jugadora_(Numero)" id="jugadoraNumero" placeholder="Numero Jugadora")
+                div(class="mb-3")
+                    label(for="fecha" class="form-label") Fecha(dd/mm/aaaa):
+                    p
+                        input(type="text" class="form-control" name="Fecha" id="fecha" placeholder="Fecha")
+                div(class="mb-3")
+                    label(for="momento" class="form-label") Momento del entreno:
+                    p
+                        input(type="text" class="form-control" name="Momento_del_entreno" id="momento" placeholder="Pre-Entreno / Post-Entreno")
+                div(class="mb-3")
+                    label(for="cansancio" class="form-label") Cansancio (0-7):
+                    p
+                        input(type="number" class="form-control" name="Nivel_de_cansancio" id="cansancio" placeholder="Escala del 0 al 7")
+                div(class="mb-3")
+                    button(type="submit" value="Enviar") Enviar
+            </form>
