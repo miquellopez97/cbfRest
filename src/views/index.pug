@@ -8,10 +8,15 @@ doctype html
     body
         <h2> Dias entrenados: #{daysTrained}</h2>
         <h2> Jugadoras </h2>
-            div
+            <div>
                 each value, index in showplayer
-                            if value.Nombre
-                                <input style = "margin:1em" class="btn btn-primary" type="button" onclick="window.location.href=`/jugadora/#{value.Numero}`;" value=" #{value.Nombre + ' (' + value.Numero + ')'}" />
+                    <div style="display: inline-flex">
+                        <a href="/jugadora/#{value.Numero}" style="margin:1em">
+                            <img src="#{value.photo}" width="100" height="130">
+                            <input style = "margin:1em" class="btn btn-primary" type="button" onclick="window.location.href=`/jugadora/#{value.Numero}`" value=" #{value.Nombre + ' (' + value.Numero + ')'}" />
+                        </a>
+                    </div>
+            </div>
         <h2> Todos los datos </h2>
             div
                 ul
