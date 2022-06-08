@@ -16,13 +16,21 @@ photoPlayers = {
 
 const obtenerDatos = async (req, res) => {
     rowData = await googleSheet.accessGoogleSheet();
-    showplayer = [];
+    showplayer = [rowData[0]];
     noDaysOff = [rowData[0].Fecha];
     daysTrained = 0;
 
     rowData.forEach((e) => {
         if (e.Fecha){
-            showplayer.push(e);
+            let flag = false;
+
+            showplayer.forEach((element) => {
+                if (element.Numero === e.Numero) {
+                    flag = true;
+                }
+            });
+
+            !flag ? showplayer.push(e) : null;
 
             const data = e.Fecha.split('/');
             data[0] = parseInt(data[0]) + 10;
@@ -34,19 +42,10 @@ const obtenerDatos = async (req, res) => {
         e.photo = photoPlayers[e.Numero];
     });
 
-    rowData.forEach((eRD) => {
-        noDaysOff.forEach((eDO) => {
-            if (eRD.Fecha != eDO) {
-                noDaysOff.push(eRD);
-            }
-        });
-    });
-    daysTrained = noDaysOff.length;
-
     rowData.sort((a, b) => b.orderData - a.orderData);
     showplayer.sort((a, b) => a.Numero - b.Numero);
 
-    res.render('index', {rowData, showplayer, daysTrained});
+    res.render('index', {rowData, showplayer});
 }
 
 const showOne = async (req, res) => {
