@@ -20,6 +20,7 @@ const obtenerDatos = async (req, res) => {
     showplayer = [rowData[0]];
     players = [];
     critical = [];
+    twoWeeks = [];
 
     //Delete undefineds
     rowData.forEach((e) => {
@@ -28,41 +29,57 @@ const obtenerDatos = async (req, res) => {
         }
     });
 
-    //Create Array unique players
     players.forEach((e) => {
-        let flag = false;
+        //Add photo to player
+        e.photo = photoPlayers[e.Numero];
 
+        //Array with unique players
+        let flag = false;
         showplayer.forEach((element) => {
             if (element.Numero === e.Numero) {
                 flag = true;
             }
         });
-
         !flag ? showplayer.push(e) : null;
 
-        //Condicion dos ultimas semanas
-        //let currentDate = new Date();
+        //Convert MarcaTemporal to Date
         const currentDate = new Date();
-        if(e.Nivel_de_cansancio >= 5 && currentDate.getDate() - e.orderData < 15) {
-            critical.push(e.Nombre);
+        const strDate = e.MarcaTemporal.split(' ', 1);
+        const dateToConvert = strDate[0].split('/');
+        const dateFormat = dateToConvert[1]+'/'+dateToConvert[0]+'/'+dateToConvert[2];
+        e.date = new Date(dateFormat + "Z");
+
+        //Cansancio ultimas dos semanas
+        if((currentDate.getDate() - e.date) <= 15) {
+            twoWeeks.push(e);
         }
     });
 
-    critical.forEach((e) => {
-        console.log(e);
-    })
+    //Add critical players
+    showplayer.forEach((p) => {
+        p.weeks = [];
+        let value = 0;
 
-    //Ordenar los datos por fecha
+        twoWeeks.forEach((e) => {
+            if (p.Numero === e.Numero) {
+                p.weeks.push(e);
+            }
+        })
 
-    //Add photos to player
-    showplayer.forEach((e) => {
-        e.photo = photoPlayers[e.Numero];
+        p.weeks.forEach((e) => {
+            value += parseInt(e.Nivel_de_cansancio);
+        })
+
+        p.avg = value / p.weeks.length;
+
+        p.avg >= 5 ? critical.push(p) : null;
     });
 
-    //Sort player by number
+    //Sort arrays by number
     showplayer.sort((a, b) => a.Numero - b.Numero);
+    critical.sort((a, b) => a.Numero - b.Numero);
 
-    res.render('index', {showplayer});
+    res.render('index', {showplayer, critical});
 }
 
 const showOne = async (req, res) => {
@@ -78,18 +95,12 @@ const showOne = async (req, res) => {
 
     //Sort data by date
     player.forEach((e) => {
-        const preData = e.MarcaTemporal.split(' ')[0];
-
-        const data = preData.split('/');
-
-        if (data[0]) {
-            data[0] = parseInt(data[0]) + 10;
-        }
-
-        e.orderData = data[2]+data[1]+data[0];
+        const strDate = e.MarcaTemporal.split(' ', 1);
+        const dateToConvert = strDate[0].split('/');
+        const dateFormat = dateToConvert[1]+'/'+dateToConvert[0]+'/'+dateToConvert[2];
+        e.date = new Date(dateFormat + "Z");
     });
-
-    player.sort((a, b) => b.orderData - a.orderData);
+    player.sort((a, b) => b.date - a.date);
 
     //Array with last 16 registers
     lastSixteen = player.slice(0, 16);
