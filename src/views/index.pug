@@ -16,13 +16,15 @@ doctype html
                         </a>
                     </div>
             </div>
-        <h2> Todos los datos </h2>
-            div
-                ul
-                    each value, index in rowData
-                        if value.Nombre
-                            li #{value.Fecha + ':' + value.Nombre + '(' + value.Numero + ')' + '->' + value.Nivel_de_cansancio}
-                hr
+        hr
+        <h2> Media de 5 en ultimos entrenos </h2>
+        //- <h2> Todos los datos </h2>
+        //-     div
+        //-         ul
+        //-             each value, index in rowData
+        //-                 if value.Nombre
+        //-                     li #{value.MarcaTemporal.split(' ')[0] + ':' + value.Nombre + '(' + value.Numero + ')' + '->' + value.Nivel_de_cansancio}
+        //-         hr
         p 
             <input style = "margin:1em" class="btn btn-primary" type="button" onclick="window.location.href=`/form`" value="Registro nuevo" />
 </html>

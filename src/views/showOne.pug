@@ -16,14 +16,14 @@
             ul
                 each value, index in lastSixteen
                     if value.Nombre
-                        <li> #{value.Fecha + '   ' + value.Momento_del_entreno + '-> Cansancio: ' + value.Nivel_de_cansancio} </li>
+                        <li> #{value.MarcaTemporal.split(' ')[0] + '   ' + value.Momento_del_entreno + '-> Cansancio: ' + value.Nivel_de_cansancio} </li>
         <hr>
         <h3> Todos los registros </h3>
         div
             <ul>
                 each value, index in player
                     if value.Nombre
-                        <li> #{value.Fecha + '   ' + value.Momento_del_entreno + '-> Cansancio: ' + value.Nivel_de_cansancio} </li>
+                        <li> #{value.MarcaTemporal.split(' ')[0] + '   ' + value.Momento_del_entreno + '-> Cansancio: ' + value.Nivel_de_cansancio} </li>
             </ul>
         p 
 </html>

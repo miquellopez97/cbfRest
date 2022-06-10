@@ -1,5 +1,6 @@
 let googleSheet = require('../spreadsheet');
 
+//Photo players
 photoPlayers = {
     4 : 'https://s3-eu-west-1.amazonaws.com/playofffederacions/basquet/FED_FOTO/Thumbs/PER_0ace4ac21-cfc1-4347-a379-ac438f4d14fc.jpg',
     5 : 'https://s3-eu-west-1.amazonaws.com/playofffederacions/basquet/FED_FOTO/Thumbs/PER_0f23e5f32-2ca6-454d-85de-4b51838f3f5b.jpg',
@@ -17,49 +18,69 @@ photoPlayers = {
 const obtenerDatos = async (req, res) => {
     rowData = await googleSheet.accessGoogleSheet();
     showplayer = [rowData[0]];
-    noDaysOff = [rowData[0].Fecha];
-    daysTrained = 0;
+    players = [];
+    critical = [];
 
+    //Delete undefineds
     rowData.forEach((e) => {
-        if (e.Fecha){
-            let flag = false;
-
-            showplayer.forEach((element) => {
-                if (element.Numero === e.Numero) {
-                    flag = true;
-                }
-            });
-
-            !flag ? showplayer.push(e) : null;
-
-            const data = e.Fecha.split('/');
-            data[0] = parseInt(data[0]) + 10;
-            e.orderData = data[2]+data[1]+data[0];
+        if (e.MarcaTemporal){
+            players.push(e);
         }
     });
 
+    //Create Array unique players
+    players.forEach((e) => {
+        let flag = false;
+
+        showplayer.forEach((element) => {
+            if (element.Numero === e.Numero) {
+                flag = true;
+            }
+        });
+
+        !flag ? showplayer.push(e) : null;
+
+        //Condicion dos ultimas semanas
+        //let currentDate = new Date();
+        const currentDate = new Date();
+        if(e.Nivel_de_cansancio >= 5 && currentDate.getDate() - e.orderData < 15) {
+            critical.push(e.Nombre);
+        }
+    });
+
+    critical.forEach((e) => {
+        console.log(e);
+    })
+
+    //Ordenar los datos por fecha
+
+    //Add photos to player
     showplayer.forEach((e) => {
         e.photo = photoPlayers[e.Numero];
     });
 
-    rowData.sort((a, b) => b.orderData - a.orderData);
+    //Sort player by number
     showplayer.sort((a, b) => a.Numero - b.Numero);
 
-    res.render('index', {rowData, showplayer});
+    res.render('index', {showplayer});
 }
 
 const showOne = async (req, res) => {
     let player = [];
     rowData = await googleSheet.accessGoogleSheet();
 
+    //Add all registers of player
     rowData.forEach(value => {
         if (value.Numero === req.params.id) {
             player.push(value);
         }
     });
 
+    //Sort data by date
     player.forEach((e) => {
-        const data = e.Fecha.split('/');
+        const preData = e.MarcaTemporal.split(' ')[0];
+
+        const data = preData.split('/');
 
         if (data[0]) {
             data[0] = parseInt(data[0]) + 10;
@@ -70,8 +91,10 @@ const showOne = async (req, res) => {
 
     player.sort((a, b) => b.orderData - a.orderData);
 
+    //Array with last 16 registers
     lastSixteen = player.slice(0, 16);
 
+    //Add photo to player
     player[0].photo = photoPlayers[req.params.id];
 
     res.render('showOne', {player, lastSixteen});
