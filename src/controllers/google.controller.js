@@ -17,22 +17,29 @@ photoPlayers = {
 
 const obtenerDatos = async (req, res) => {
     rowData = await googleSheet.accessGoogleSheet();
+    const currentDate = new Date();
     showplayer = [rowData[0]];
     players = [];
     critical = [];
     twoWeeks = [];
 
-    //Delete undefineds
+    //Clean array, convert MarcaTemporal to Date and add photo
     rowData.forEach((e) => {
         if (e.MarcaTemporal){
+            //Convert MarcaTemporal to Date
+            const strDate = e.MarcaTemporal.split(' ', 1);
+            const dateToConvert = strDate[0].split('/');
+            const dateFormat = dateToConvert[1]+'/'+dateToConvert[0]+'/'+dateToConvert[2];
+            e.date = new Date(dateFormat + "Z");
+
+            //Add photo to player
+            e.photo = photoPlayers[e.Numero];
+
             players.push(e);
         }
     });
 
     players.forEach((e) => {
-        //Add photo to player
-        e.photo = photoPlayers[e.Numero];
-
         //Array with unique players
         let flag = false;
         showplayer.forEach((element) => {
@@ -41,13 +48,6 @@ const obtenerDatos = async (req, res) => {
             }
         });
         !flag ? showplayer.push(e) : null;
-
-        //Convert MarcaTemporal to Date
-        const currentDate = new Date();
-        const strDate = e.MarcaTemporal.split(' ', 1);
-        const dateToConvert = strDate[0].split('/');
-        const dateFormat = dateToConvert[1]+'/'+dateToConvert[0]+'/'+dateToConvert[2];
-        e.date = new Date(dateFormat + "Z");
 
         //Cansancio ultimas dos semanas
         if((currentDate.getDate() - e.date) <= 15) {
