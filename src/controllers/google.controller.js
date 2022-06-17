@@ -12,7 +12,8 @@ photoPlayers = {
     14 : 'https://s3-eu-west-1.amazonaws.com/playofffederacions/basquet/FED_FOTO/Thumbs/PER_0df8da245-4747-489b-8832-dc1634d34156.png',
     15 : 'https://s3-eu-west-1.amazonaws.com/playofffederacions/basquet/FED_FOTO/Thumbs/PER_0227aed8a-1c0a-410a-8004-d605e23a54ae.jpg',
     18 : 'https://s3-eu-west-1.amazonaws.com/playofffederacions/basquet/FED_FOTO/Thumbs/PER_052d9b5c9-0be5-47be-b002-850258b7f185.png',
-    24 : 'https://s3-eu-west-1.amazonaws.com/playofffederacions/basquet/FED_FOTO/Thumbs/PER_097f226e4-6bcf-4799-8437-3f16ec9b4333.jpg'
+    24 : 'https://s3-eu-west-1.amazonaws.com/playofffederacions/basquet/FED_FOTO/Thumbs/PER_097f226e4-6bcf-4799-8437-3f16ec9b4333.jpg',
+    99: 'https://d1wppq8sjja81z.cloudfront.net/basquet/FED_FOTO/Thumbs/PER_381471_8083ec1a-d815-4aaa-b86e-6a9de070c1de.jpg'
 };
 
 const obtenerDatos = async (req, res) => {
