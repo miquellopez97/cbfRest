@@ -15,15 +15,19 @@
         div
             ul
                 each value, index in lastSixteen
-                    if value.Nombre
-                        <li> #{value.MarcaTemporal.split(' ')[0] + '   ' + value.Momento_del_entreno + '-> Cansancio: ' + value.Nivel_de_cansancio} </li>
+                    if !value.Comentarios
+                        <li> <strong>#{value.MarcaTemporal.split(' ')[0]}</strong> #{value.Momento_del_entreno} -> <strong>Cansancio:</strong> #{value.Nivel_de_cansancio}</li>
+                    else
+                        <li> <strong>#{value.MarcaTemporal.split(' ')[0]}</strong> #{value.Momento_del_entreno} -> <strong>Cansancio:</strong> #{value.Nivel_de_cansancio} -> <strong>Comentario:</strong> #{value.Comentarios} </li>
         <hr>
         <h3> Todos los registros </h3>
         div
             <ul>
                 each value, index in player
-                    if value.Nombre
-                        <li> #{value.MarcaTemporal.split(' ')[0] + '   ' + value.Momento_del_entreno + '-> Cansancio: ' + value.Nivel_de_cansancio} </li>
+                    if !value.Comentarios
+                        <li> <strong>#{value.MarcaTemporal.split(' ')[0]}</strong> #{value.Momento_del_entreno} -> <strong>Cansancio:</strong> #{value.Nivel_de_cansancio}</li>
+                    else
+                        <li> <strong>#{value.MarcaTemporal.split(' ')[0]}</strong> #{value.Momento_del_entreno} -> <strong>Cansancio:</strong> #{value.Nivel_de_cansancio} -> <strong>Comentario:</strong> #{value.Comentarios} </li>
             </ul>
         p 
 </html>
