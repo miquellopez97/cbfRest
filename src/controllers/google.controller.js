@@ -11,7 +11,7 @@ photoPlayers = {
     11 : 'https://s3-eu-west-1.amazonaws.com/playofffederacions/basquet/FED_FOTO/Thumbs/PER_06dec579f-b152-42b6-86f8-ad4cf83d9f64.png',
     14 : 'https://s3-eu-west-1.amazonaws.com/playofffederacions/basquet/FED_FOTO/Thumbs/PER_0df8da245-4747-489b-8832-dc1634d34156.png',
     18 : 'https://s3-eu-west-1.amazonaws.com/playofffederacions/basquet/FED_FOTO/Thumbs/PER_052d9b5c9-0be5-47be-b002-850258b7f185.png',
-    21 : 'https://d1wppq8sjja81z.cloudfront.net/basquet/FED_FOTO/Thumbs/PER_353164_5c96e464-d786-4845-be85-d9de9e27e739.jpg',
+    12 : 'https://d1wppq8sjja81z.cloudfront.net/basquet/FED_FOTO/Thumbs/PER_353164_5c96e464-d786-4845-be85-d9de9e27e739.jpg',
     24: 'https://d1wppq8sjja81z.cloudfront.net/basquet/FED_FOTO/Thumbs/PER_381471_8083ec1a-d815-4aaa-b86e-6a9de070c1de.jpg'
 };
 
@@ -74,7 +74,7 @@ const obtenerDatos = async (req, res) => {
 
         p.avg >= 5 ? critical.push(p) : null;
     });
-
+    
     //Sort arrays by number
     showplayer.sort((a, b) => a.Numero - b.Numero);
     critical.sort((a, b) => a.Numero - b.Numero);
